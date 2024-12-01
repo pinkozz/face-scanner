@@ -7,6 +7,10 @@ haar_face = cv2.CascadeClassifier(haar_cascade_path)
 
 name = str(input("What is your name?: "))
 
+def putTextBG(img, text, org, fontFace, fontScale, text_color, thickness, bg_color=(0,0,0)):
+    cv2.rectangle(img, (0, 120), (1920, 155), bg_color, -1)
+    cv2.putText(img, text, org, fontFace, fontScale, text_color, thickness)
+
 cam = cv2.VideoCapture(0)
 
 taken = False
@@ -28,7 +32,7 @@ while taken != True:
     cv2.rectangle(frame, (rec_x1, rec_y1), (rec_x2, rec_y2), (0, 255, 0), thickness=2)
 
     if len(faces_rect) == 0:
-        cv2.putText(frame, "Can't detect any faces", (800, 150), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
+        putTextBG(frame, "Can't detect any faces", (810, 150), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
 
     for (x1, y1, x2, y2) in faces_rect:
         print(f"""
@@ -40,9 +44,9 @@ while taken != True:
 
         # cv2.rectangle(frame, (x1, y1), (x1+x2, y1+y2), (0, 255, 0), thickness=2)
         if x1 < rec_x1 or y1 < rec_y1 or x1 > rec_y2 or y1 > 500:
-            cv2.putText(frame, "Please put your face inside the rectangle", (660, 150), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
+            putTextBG(frame, "Please put your face inside the rectangle ", (660, 150), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
         else:
-            cv2.putText(frame, "Hold your head still. Precc 'c' to capture", (730, 150), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
+            putTextBG(frame, "Hold your head still. Precc 'c' to capture", (660, 150), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
             if cv2.waitKey(1) & 0xFF == ord('c'):
                 cv2.imwrite(f"./faces/{name}_face_{time.time()}.jpg", roi)
                 taken = True
