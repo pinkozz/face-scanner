@@ -2,17 +2,20 @@ import cv2
 import time
 import os
 
+time.sleep(1)
+
 haar_cascade_path = "./detection-model/haar_face.xml"
 
 haar_face = cv2.CascadeClassifier(haar_cascade_path)
 
-name = str(input("What is your name?: "))
+name = "serhii"
+# name = str(input("What is your name?: "))
 
 def putTextBG(img, text, org, fontFace=cv2.FONT_HERSHEY_SIMPLEX, fontScale=1, text_color=(0, 0, 255), thickness=2, bg_color=(0,0,0)):
     cv2.rectangle(img, (0, 120), (1920, 155), bg_color, -1)
     cv2.putText(img, text, org, fontFace, fontScale, text_color, thickness)
 
-cam = cv2.VideoCapture(0)
+cam = cv2.VideoCapture(1)
 
 taken = False
 
