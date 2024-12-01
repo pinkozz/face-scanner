@@ -1,5 +1,6 @@
 import cv2
 import time
+import os
 
 haar_cascade_path = "./detection-model/haar_face.xml"
 
@@ -48,7 +49,11 @@ while taken != True:
         else:
             putTextBG(frame, "Hold your head still. Precc 'c' to capture", (660, 150), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
             if cv2.waitKey(1) & 0xFF == ord('c'):
-                cv2.imwrite(f"./faces/{name}_face_{time.time()}.jpg", roi)
+                try:
+                    os.mkdir(f"./faces/{name}")
+                except FileExistsError:
+                    pass
+                cv2.imwrite(f"./faces/{name}/face_{time.time()}.jpg", roi)
                 taken = True
 
 
